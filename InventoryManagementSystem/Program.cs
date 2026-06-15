@@ -1,9 +1,13 @@
 using InventoryManagementSystem.Data;
+using InventoryManagementSystem.Services;
+using InventoryManagementSystem.Services.Interface;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+//Product
+builder.Services.AddScoped<IProductService,ProductService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
