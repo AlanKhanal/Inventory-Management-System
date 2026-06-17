@@ -28,9 +28,40 @@ namespace InventoryManagementSystem.Services
             return product;
         }
 
+        public async Task<bool> DeleteProductAsync(int id)
+        {
+            var product = await _context.Products.FindAsync(id);
+            if(product == null) {
+                return false;
+            }
+            _context.Products.Remove(product);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
         public async Task<List<Product>> GetAllProductAsync()
         {
             return await _context.Products.ToListAsync();
+        }
+
+        public async Task<Product> GetByIdAsync(int id)
+        {
+            return await _context.Products.FindAsync(id);
+        }
+
+        public async Task<Product> UpdateProductASync(int id, CreateProductDto dto)
+        {
+            var product = await _context.Products.FindAsync(id);
+            if(product == null)
+            {
+                return null;
+            }
+            product.Name=dto.Name;
+            product.Price=dto.Price;
+            product.Stock=dto.Stock;
+
+            await _context.SaveChangesAsync();
+            return product;
         }
     }
 }
