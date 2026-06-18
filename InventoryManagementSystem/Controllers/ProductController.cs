@@ -17,10 +17,12 @@ namespace InventoryManagementSystem.Controllers
         }
 
 
-        //Create
         [HttpPost]
         public async Task<IActionResult> AddProduct(CreateProductDto dto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var result = await _service.AddProductAsync(dto);
             return Ok(result);
         }
@@ -38,6 +40,9 @@ namespace InventoryManagementSystem.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateProduct(int id, CreateProductDto dto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var product = await _service.UpdateProductASync(id,dto);
             if(product == null)
             {
@@ -60,5 +65,16 @@ namespace InventoryManagementSystem.Controllers
             return NoContent();
         }
 
+        //Single Product
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetProduct(int id)
+        {
+            var result = await _service.GetByIdAsync(id);
+
+            if (result == null)
+                return NotFound();
+
+            return Ok(result);
+        }
     }
 }
