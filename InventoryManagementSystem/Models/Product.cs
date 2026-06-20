@@ -8,5 +8,8 @@
         public int Stock { get; set; }
         public DateTime CreatedAt { get; set; }= DateTime.Now;
 
+
+        public int CategoryId {  get; set; }
+        public Category Category { get; set; }
     }
 }
